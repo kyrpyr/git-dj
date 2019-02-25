@@ -113,14 +113,14 @@ class GitDj
   def get_updates_from_origin
     drop_commands_cache
     cur_branch = current_branch_name
-    run_cmds [ "git pull origin #{cur_branch}" ]
+    run_cmds [ "git pull origin #{cur_branch} --rebase" ]
   end
 
   def push_updates_to_origin
     drop_commands_cache
     cur_branch = current_branch_name
     run_cmds [
-      "git pull origin #{cur_branch}",
+      "git pull origin #{cur_branch} --rebase",
       "git push origin #{cur_branch}"
     ]
   end
