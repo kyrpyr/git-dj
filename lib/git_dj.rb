@@ -28,11 +28,20 @@ class GitDj
       integrate_current_branch_to_another
     when 'pr'
       create_pull_request
+    when 'ci'
+      create_commit
     when 'help'
       print_help
     else
       print_help
     end
+  end
+
+  def create_commit
+    run_cmds [
+      "git add .",
+      "git commit -m '#{ARGV[1]}'"
+    ]
   end
 
   def create_pull_request
@@ -141,6 +150,7 @@ Usage:
 #{green_color('gdj get')} - pull changes from origin to local
 #{green_color('gdj put')} - pull, then push changes from origin to local
 #{green_color('gdj pr')} - push current branch to origin, then open pull request in browser
+#{green_color('gdj ci "message here"')} - create commit
 #{green_color('gdj continue')} - continue previous failed command (after merge, etc)
 
 }
