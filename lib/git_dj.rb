@@ -128,8 +128,7 @@ class GitDj
   end
 
   def current_repo_url
-    url = %x(git ls-remote --get-url origin)
-    url[0..-6]
+    %x(https://github.$(git config remote.origin.url | cut -f2 -d.))
   end
 
   def print_help
