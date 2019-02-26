@@ -137,7 +137,8 @@ class GitDj
   end
 
   def current_repo_url
-    %x(https://github.$(git config remote.origin.url | cut -f2 -d.))
+    s = %x(git config remote.origin.url | cut -f2 -d.).to_s.chomp
+    "https://github.#{s}"
   end
 
   def print_help
