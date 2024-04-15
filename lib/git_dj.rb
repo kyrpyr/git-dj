@@ -12,20 +12,20 @@ class GitDj
 
   def perform
     case ARGV[0]
-    when 'integrate'
+    when 'integrate', 'i'
       integrate_current_branch
-    when 'integrate2'
-      integrate_current_branch2
-    when 'release'
-      release_current_branch
+    # when 'integrate2'
+    #   integrate_current_branch2
+    # when 'release'
+    #   release_current_branch
     when 'get'
       get_updates_from_origin
     when 'put'
       push_updates_to_origin
-    when 'continue'
+    when 'continue', 'c'
       continue_prev_commands
-    when "i"
-      integrate_current_branch_to_another
+    # when "i"
+    #   integrate_current_branch_to_another
     when 'pr'
       create_pull_request
     when 'ci'
