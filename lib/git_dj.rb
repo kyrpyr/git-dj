@@ -45,10 +45,21 @@ class GitDj
   end
 
   def create_pull_request
+    open_cmd =
+      if gitlab?
+        "open #{current_repo_url}/-/merge_requests/new?merge_request%5Bsource_branch%5D=#{current_branch_name}"
+      else
+        "open #{current_repo_url}/compare/#{current_branch_name}?expand=1"
+      end
+
     run_cmds [
       "git push origin #{current_branch_name}",
-      "open #{current_repo_url}/compare/#{current_branch_name}?expand=1"
-  ]
+      open_cmd
+    ]
+  end
+
+  def gitlab?
+    @is_gitbab ||= %x(git config remote.origin.url).include?('gitlab')
   end
 
   def integrate_current_branch
@@ -137,8 +148,13 @@ class GitDj
   end
 
   def current_repo_url
-    s = %x(git config remote.origin.url | cut -f2 -d.).to_s.chomp
-    "https://github.#{s}"
+    @repo_url ||=
+      if gitlab?
+        %x(git config remote.origin.url).to_s.chomp.gsub(/.git$/, '')
+      else
+        s = %x(git config remote.origin.url | cut -f2 -d.).to_s.chomp
+        "https://github.#{s}"
+      end
   end
 
   def print_help
