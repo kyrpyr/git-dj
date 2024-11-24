@@ -176,7 +176,7 @@ Usage:
 private
 
   def drop_commands_cache
-    if File.exists?(LOG_FILE_NAME)
+    if File.exist?(LOG_FILE_NAME)
       FileUtils.rm(LOG_FILE_NAME)
     end
   end
